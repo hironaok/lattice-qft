@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>中間発表</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- MathJax -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            }
+        };
+    </script>
+
+    <script
+        id="MathJax-script"
+        async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+
+<body>
+
+    <!-- Title -->
+    <section class="slide title-slide active">
+      <h1>クォーク・グルーオン多体系の物性論</h1>
+      <h2>ー 格子 QCD による第一原理計算 ー</h2>
+
+      <p>大阪大学 理学研究科 物理学専攻 原子核理論研究室<br>大和　寛尚</p>
+      <p>スライドのソースファイルは<a href="https://hironaok.github.io">こちら</a></p>
+    </section>
+
+    <section class="slide">
+      <h1>スライド</h1>
+      <p>
+	スライドを閲覧するには<a href="https://hironaok.github.io/lattice-qcd">こちら</a>にアクセスしてください：<br>
+	<code>https://hironaok.github.io/tmp</code>
+      </p>
+    </section>
+    
+    <section class="slide">
+      <h1>目次</h1>
+      <p>
+	クォーク・グルーオン多体系の相構造<br>
+	格子上の場の理論<br>
+	数値計算<br>
+	結果と考察
+      </p>
+    </section>
+    
+    <!-- Motivation -->
+    <section class="slide">
+        <h1>クォーク・グルーオン多体系の相構造</h1>
+
+    </section>
+
+    <section class="slide">
+        <h1>格子上の場の理論</h1>
+        <p>
+	  格子化された QCD 作用
+        </p>
+    </section>
+
+
+    <!-- Results -->
+    <section class="slide">
+      <h1>数値計算</h1>
+      <p>
+	シミュレーション・パラメータ
+      </p>
+      <table class="data-table">
+	 <thead>
+	   <tr>
+	     <th>$T$</th>	     
+	     <th>$\beta$</th>
+	     <th>$\kappa$</th>
+	     <th>$c_\mathrm{SW}$</th>
+	     <th>Lattice size</th>
+	     <th>Number of traj.</th>
+           </tr>
+	 </thead>
+
+	 <tbody>
+	     <tr>
+		 <td>0.76 $T_\mathrm{pc}$</td>
+		 <td>1.50</td>
+		 <td>0.143 480</td>
+		 <td>0.143 480</td>
+		 <td>32 ✕ 16² ✕  4</td>
+		 <td>5000</td>		 
+	     </tr>
+	   
+	     <tr>
+		 <td>1.08 $T_\mathrm{pc}$</td>
+		 <td>1.90</td>
+		 <td>0.138 817</td>
+		 <td>0.143 480</td>
+		 <td>64 ✕ 16² ✕  4</td>		 
+		 <td>5000</td>		 
+	     </tr>
+
+	     <tr>
+		 <td>2.07 $T_\mathrm{pc}$</td>	       
+		 <td>2.20</td>
+		 <td>0.135 010</td>
+		 <td>0.143 480</td>
+		 <td>128 ✕ 16² ✕  4</td>		 
+		 <td>5000</td>		 
+	     </tr>
+	 </tbody>
+      </table>
+      <p>つまり，低温・擬臨界温度・高温の 3 つの温度でシミュレーションを行った．</p>
+    </section>
+
+
+    <section class="slide">
+      <h1>結果と考察</h1>
+      <img src="images/result.png" alt="result.png">      
+    </section>
+
+
+    <div id="page-number"></div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

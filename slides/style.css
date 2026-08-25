@@ -1,0 +1,164 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    font-family: sans-serif;
+
+    background: white;
+    color: #222;
+
+    overflow: hidden;
+}
+
+
+/* Slides */
+
+.slide {
+    display: none;
+
+    width: 100vw;
+    height: 100vh;
+
+    padding: 6vh 7vw;
+}
+
+.slide.active {
+    display: block;
+}
+
+
+/* Text */
+
+h1 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+//    text-align: center;
+
+    padding-bottom: 0.5rem;
+
+    color: blue;
+    font-size: 3rem;
+    font-weight: normal;
+}
+
+h2 {
+    margin-top: 0;
+    font-size: 2rem;
+    font-weight: normal;
+    color: blue;
+}
+
+p, li {
+    font-size: 2rem;
+    line-height: 1.6;
+}
+
+li {
+    margin-bottom: 0.7rem;
+}
+
+a {
+    color: red;
+}
+
+/* Title slide */
+
+.title-slide {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+}
+
+.title-slide.active {
+    display: flex;
+}
+
+.title-slide h1 {
+    font-size: 3.5rem;
+    border: none;
+}
+
+
+/* Images */
+
+img {
+    display: block;
+
+    max-width: 80%;
+    max-height: 60vh;
+
+    margin: 2rem auto;
+}
+
+
+/* Columns */
+
+.columns {
+    display: flex;
+    gap: 3rem;
+}
+
+.column {
+    flex: 1;
+}
+
+
+/* Page number */
+
+#page-number {
+    position: fixed;
+
+    right: 2rem;
+    bottom: 1.5rem;
+
+    font-size: 1rem;
+    color: #777;
+}
+.contents {
+    list-style: none;
+    counter-reset: section;
+    padding-left: 0;
+}
+
+.contents li {
+    counter-increment: section;
+    font-size: 2.3rem;
+    margin-bottom: 1.5rem;
+}
+
+.contents li::before {
+    content: counter(section) ".";
+    display: inline-block;
+    width: 10rem;
+}
+
+mjx-container[display="true"] {
+    font-size: 130% !important;
+}
+
+/* Inline equations */
+mjx-container:not([display="true"]) {
+    font-size: 100% !important;
+}
+
+.data-table {
+    margin: 3rem auto;
+    border-collapse: collapse;
+    font-size: 1.6rem;
+}
+
+.data-table th,
+.data-table td {
+    padding: 1rem 2rem;
+    text-align: center;
+    border: 1px solid #333;
+}
+
+.data-table th {
+    font-weight: normal;
+}

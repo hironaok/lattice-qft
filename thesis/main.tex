@@ -1,0 +1,75 @@
+\documentclass[dvipdfmx, a4paper]{jarticle}
+
+\usepackage[margin = 25mm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{caption}
+\usepackage{comment}
+\usepackage{cancel}
+%% \usepackage[yu-win10]{pxchfon}
+
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\renewcommand{\baselinestretch}{1.3}
+
+\numberwithin{equation}{section}
+
+\DeclareCaptionLabelFormat{tabnum}{#1\ #2}
+%% \captionsetup[table]{labelformat=tabnum}
+
+\DeclareCaptionLabelSeparator{tabsep}{.\quad} 
+\captionsetup{labelsep=tabsep}
+
+\setcounter{tocdepth}{3}
+
+\begin{document}
+\centerline{{\large 修士論文}}
+\bigskip
+\centerline{{\LARGE タイトル未定}}
+\vfill
+\centerline{{\large 大阪大学\,\,理学研究科\,\,物理学専攻\,\,原子核理論研究室}}
+\smallskip
+\centerline{{\large 大和　寛尚}}
+\pagestyle{empty}
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{場の理論}
+この節では非常に多くの粒子を扱うための統計処理の数学的スキームとしての場の理論を解説する．
+
+\subsection{多数の変数に支配される統計}
+いま，$N$個の確率変数$X = \qty(X_1, \cdots, X_N)$に支配される確率分布を考える．確率分布$P(X)$は次の形で与えられるとする．
+\begin{align}
+  P(X) = \frac{e^{-S[X]}}{Z}.
+\end{align}
+ここで，$S[X]$は$X$の何らかの関数である（具体形は指定しない）．また，$Z$は規格化定数であって次の形式を持つ．
+\begin{align}
+  Z = \int \qty[\dd X] \, e^{-S[X]}
+   := \int \dd X_1 \cdots \int\dd X_N \, e^{-S[X]}.
+\end{align}
+この状況下で，ある量$O(X)$の期待値$\ev{O(X)}$とは
+\begin{align}
+  \ev{O(X)} = \int \qty[\dd X] \, O(X) e^{-S[X]}
+           := \int \dd X_1 \cdots \int \dd X_N \, O(X) e^{-S[X]}
+\end{align}
+である．いま，$S[X]$を$X$の2次形式であらわせる部分とそれ以外の部分に分解し，それぞれ$S_0[X]$と$S_\mathrm{int}[X]$と書くことにする．
+\begin{align}
+  S[X] = S_0[X] + S_\mathrm{int}[X].
+\end{align}
+このような分解は2次形式を指数関数の肩に乗せたものが解析的に計算が可能であるという事実に動機付けられるものである．この分解を行うと実質的に任意の確率分布の下での期待値を正規分布の下での期待値に読み替えることができる：
+\begin{align}
+  \ev{O(X)} = \int \qty[\dd X] \, O(X) e^{-S[X]}
+            = \int \qty[\dd X] \, O(X) e^{-\qty(S_0[X] + S_\mathrm{int}[X])}
+            = \int \qty[\dd X] \, \qty{O(X) e^{-S_\mathrm{int}[X]}} e^{-S_0[X]}.
+\end{align}
+
+\subsection{摂動計算}
+前節で見たように正規分布の下での期待値の形に書き直すことができれば摂動計算を行うことができる．
+
+\end{document}

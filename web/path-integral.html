@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>経路積分の方法</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- MathJax -->
+    <script>
+	window.MathJax = {
+	    loader: {
+		load: ['[tex]/physics']
+	    },
+
+	    tex: {
+		packages: {
+		    '[+]': ['physics']
+		},
+
+		inlineMath: [['$', '$']],
+		displayMath: [['$$', '$$']]
+	    }
+	};      
+    </script>
+
+    <script
+        defer
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>    
+</head>
+
+<body>
+
+<main>
+
+  <h1>経路積分の方法</h1>
+  <h2>１．多数の変数に支配される統計</h2>
+    <p>
+    いま，$N$ 個の確率変数 $X = \qty(X_1, \cdots, X_N)$ に支配される確率分布を考える．
+    確率分布$P(X)$は次の形で与えられるとする．
+    $$
+      P(X) = \frac{e^{-S[X]}}{Z}.
+    $$
+    ここで，$S[X]$ は $X$ の何らかの関数である（具体形は指定しない）．
+    また，$Z$ は規格化定数であって次の形式を持つ．
+    $$
+      Z = \int \qty[\dd X] \, e^{-S[X]}
+       := \int \dd X_1 \cdots \int\dd X_N \, e^{-S[X]}.
+    $$
+    この状況下で，ある量 $O(X)$ の期待値 $\ev{O(X)}$ とは
+    $$
+      \ev{O(X)} = \int \qty[\dd X] \, O(X) e^{-S[X]}
+	       := \int \dd X_1 \cdots \int \dd X_N \, O(X) e^{-S[X]}
+    $$
+    である．
+    いま，$S[X]$ を $X$ の2次形式であらわせる部分とそれ以外の部分に分解し，それぞれ $S_0[X]$ と $S_\mathrm{int}[X]$ と書くことにする．
+    $$
+      S[X] = S_0[X] + S_\mathrm{int}[X].
+    $$
+    このような分解は2次形式を指数関数の肩に乗せたものが解析的に計算が可能であるという事実に動機付けられるものである．
+    この分解を行うと実質的に任意の確率分布の下での期待値を正規分布の下での期待値に読み替えることができる：
+    $$
+      \ev{O(X)} = \int \qty[\dd X] \, O(X) e^{-S[X]}
+		= \int \qty[\dd X] \, O(X) e^{-\qty(S_0[X] + S_\mathrm{int}[X])}
+		= \int \qty[\dd X] \, \qty{O(X) e^{-S_\mathrm{int}[X]}} e^{-S_0[X]}.
+    $$
+
+    いま，この結果を用いて次のように摂動計算を行うことができる．
+    正規分布の下での期待値の計算は複雑な確率分布の下での計算よりずっと易しい．
+    基本的な考え方は単に $e^{-S_\mathrm{int}[X]}$ を級数展開するのみである．
+    $$
+      \ev{O(X)} = \int \qty[\dd X] \, O(X) \sum_{k = 0}^{\infty}\frac{\qty(-S_\mathrm{int}[X])^k}{k!} e^{-S_0[X]}
+		\sim \int \qty[\dd X] \, O(X) e^{-S_0[X]} - \int \qty[\dd X] \, O(X) S_\mathrm{int}[X] e^{-S_0[X]} + \cdots
+    $$
+    である．
+    最右辺をどう計算するかが問題であるが正規分布の下で少々複雑な量の期待値を計算することに帰着されたので問題は大幅に簡略化されたといえる．
+
+    以上が摂動的場の理論の根幹をなす考え方である．物理学者は $X = \qty(X_1, \cdots, X_N)$ の添え字を連続に拡張し $X(x); \, x\in \mathbb{R}^n$ に対して同様な計算手法を構築した．
+    それが経路積分である．
+    経路積分は次のように表記されることが多い．
+    $$
+      Z = \int \mathscr{D}X \, e^{-S[X]}, \quad \ev{O(X)} = \int \mathscr{D}X \, O(X) e^{-S[X]}.
+    $$
+    </p>
+
+</main>
+
+</body>
+</html>

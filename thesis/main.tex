@@ -42,8 +42,6 @@
 \newpage
 
 \section{場の理論}
-この節では非常に多くの粒子を扱うための統計処理の数学的スキームとしての場の理論を解説する．
-
 \subsection{多数の変数に支配される統計と摂動計算の一般論}
 いま，$N$個の確率変数$X = \qty(X_1, \cdots, X_N)$に支配される確率分布を考える．
 確率分布$P(X)$は次の形で与えられるとする．
@@ -91,42 +89,39 @@
   Z = \int \mathscr{D}X \, e^{-S[X]}, \quad \ev{O(X)} = \int \mathscr{D}X \, O(X) e^{-S[X]}.
 \end{align}
 
-\subsection{$\varphi^4$理論}
-ここで我々は，実際の問題に立ち向かうべく，ついに具体的な例を取り上げなくてはならない．
-前節までに残された問題はいかにして正規分布の下での期待値を計算するかということである．
-以降ではそれを解説するべく，$\varphi^4$理論における2点関数を例に取り上げることにする．
-\begin{align}
-  S[\varphi] = \int_0^\beta \dd \tau \int_{-\infty}^\infty \dd^3 r \, \qty{\varphi(\tau, \bm{r}) D(\tau, \bm{r}) \varphi(\tau, \bm{r}) - \frac{\lambda}{4!}\varphi^4(\tau, \bm{r})}, \quad D(\tau, \bm{r}) = \frac{-\partial_\tau^2 - \nabla^2 + m^2}{2}
-\end{align}
-いま，計算したいのは
-\begin{align}
-  \ev{T\Big\{\varphi(\tau, \bm{r})\varphi(\tau', \bm{r}')\Big\}} &\sim \int \mathscr{D}\varphi \, \varphi(\tau, \bm{r}) \varphi(\tau', \bm{r}') \exp{-\int_0^\beta \dd \tau \int_{-\infty}^\infty \dd^3 r \, \varphi(\tau, \bm{r}) D(\tau, \bm{r}) \varphi(\tau, \bm{r})} \notag \\
-  &\quad + \frac{\lambda}{4!}\int \mathscr{D}\varphi \, \varphi(\tau, \bm{r}) \varphi(\tau', \bm{r}') \varphi^4(\tau'', \bm{r}'') \exp{-\int_0^\beta \dd \tau \int_{-\infty}^\infty \dd^3 r \, \varphi(\tau, \bm{r}) D(\tau, \bm{r}) \varphi(\tau, \bm{r})} + \cdots
-\end{align}
-である．
-ここで，場の量子論では前節で導入した期待値は時間順除積の期待値に対応することに注意する．
-以降，正規分布の下での期待値を$\ev{\,\circ\,}_0$であらわすことにする．
-すると，計算すべきものは次のようにシンプルにあらわされる．
-\begin{align}
-  \ev{\varphi(\tau, \bm{r}) \varphi(\tau', \bm{r}')}_0, \quad \ev{\varphi(\tau, \bm{r}) \varphi(\tau', \bm{r}') \varphi^4(\tau'', \bm{r}'')}_0, \quad \cdots.
-\end{align}
-一つ目，つまり，摂動の0次は特殊である．
-実はこれはFourier空間に移ることによって容易に計算できる．
-これはFeynman伝播関数（propagator）と呼ばれる．
-改めて，その表示を書くと
-\begin{align}
-  \ev{\varphi(\tau, \bm{r})\varphi(\tau', \bm{r}')}_0 = \int \mathscr{D} \varphi \, \varphi(\tau, \bm{r}) \varphi(\tau', \bm{r}') \exp{-\int_0^\beta \dd \tau \int_{-\infty}^\infty \dd^3 r \, \varphi(\tau, \bm{r}) D(\tau, \bm{r}) \varphi(\tau, \bm{r})}
-\end{align}
-である．
-いま，周期境界条件$\varphi(\tau + \beta, \bm{r}) = \varphi(\tau, \bm{r})$の下ではFourier空間での展開は次のようになる．
-\begin{align}
-  \varphi(\tau, \bm{r}) = \sum_{n = -\infty}^{\infty} \frac{1}{\beta}\int_{-\infty}^{\infty} \frac{\dd^3k}{\qty(2\pi)^{3/2}} \, \tilde{\varphi}(\omega_n, \bm{k}) e^{i\qty(\omega_n \tau + \bm{k}\cdot \bm{r})}, \quad \omega_n = \frac{2\pi n}{\beta}.
-\end{align}
-このとき，作用は
-\begin{align}
-  S_0[\varphi] = \sum_{n = -\infty}^{\infty}\frac{1}{\beta} \int_{-\infty}^{\infty} \frac{\dd^3 k}{\qty(2\pi)^{3/2}} \, \qty(\omega_n^2 + \bm{k}^2 + m^2)\tilde{\varphi}(\omega_n, \bm{k})\tilde{\varphi}(-\omega_n, -\bm{k})
-\end{align}
-と変換され，
+\subsection{Wick の定理}
 
-\subsection{$\mathrm{QCD}_4$理論}
+
+\subsection{自由スカラー場のプロパゲーターの計算}
+自由スカラー場のプロパゲーターは次で定義される．
+\begin{align}
+  \ev{T\Big\{\varphi(x)\varphi(y)\Big\}}_0 = \frac{1}{Z}\int \mathscr{D} \varphi \,\varphi(x)\varphi(y) \exp{-\frac{1}{2}\int \dd^4x \, \varphi(x) \qty(-\partial^2 + m^2) \varphi(x)}.
+\end{align}
+計算上の利便のため，$\varphi$ を Fourier 変換しておく．
+自由場の作用は
+\begin{align}
+  S_0[\varphi] &= \frac{1}{2}\int \dd^4x \, \varphi(x) \qty(-\partial^2 + m^2) \varphi(x) = \frac{1}{2}\int \dd^4x \, \int_p \tilde{\varphi}(p) e^{ipx} \qty(-\partial^2 + m^2) \int_q \tilde{\varphi}(q) e^{iqx} \notag \\
+  &= \frac{1}{2}\int_p \int_q \tilde{\varphi}(p) \tilde{\varphi}(q) \qty(q^2 + m^2) \int \dd^4x \, e^{i(p + q)x} = \frac{1}{2}\int_p \int_q  \tilde{\delta}(p+q) \qty(q^2 + m^2) \tilde{\varphi}(p) \tilde{\varphi}(q) \notag \\
+  &= \frac{1}{2}\int_p  \qty(p^2 + m^2) \tilde{\varphi}(p) \tilde{\varphi}(-p)
+\end{align}
+の変換を受ける．
+よって，プロパゲーター自体は
+\begin{align}
+  \ev{T\Big\{\varphi(x)\varphi(y)\Big\}}_0 &= \frac{1}{Z}\int \mathscr{D} \tilde{\varphi} \, \int_p \tilde{\varphi}(p)e^{ipx} \int_q \tilde{\varphi}(-q)e^{iqy} \exp{-\frac{1}{2}\int_k  \qty(k^2 + m^2) \tilde{\varphi}(k) \tilde{\varphi}(-k)} \notag \\
+  &= \frac{1}{Z}\int_p e^{ipx} \int_q e^{iqy} \int \mathscr{D} \tilde{\varphi} \, \tilde{\varphi}(p) \tilde{\varphi}(-q) \exp{-\frac{1}{2}\int_k  \qty(k^2 + m^2) \tilde{\varphi}(k) \tilde{\varphi}(-k)}.
+\end{align}
+である．
+\footnote{スカラー場が実である条件 $\tilde{\varphi}(p) = \tilde{\varphi}(-p)$ を用いている．}
+奇関数の性質を用いると $p = -q$ の場合以外は，これは有限の値を持たないことが直ちにわかる．
+よって，結局のところ
+\begin{align}
+  \ev{T\Big\{\varphi(x)\varphi(y)\Big\}}_0 &= \frac{1}{Z}\int_p  e^{ipx}  \int_q  e^{iqy} \int \mathscr{D} \tilde{\varphi} \, \tilde{\varphi}^2(p)\exp{-\frac{1}{2}\int_k  \qty(k^2 + m^2) \tilde{\varphi}^2(k)} \tilde{\delta}(p + q) \notag \\
+  &= \int_p  e^{ipx}  \int_q  e^{iqy} \, \tilde{\delta}(p + q) \int \mathscr{D} \tilde{\varphi} \, \tilde{\varphi}^2(p)\exp{-\frac{1}{2}\int_k  \qty(k^2 + m^2) \tilde{\varphi}^2(k)} \notag\\
+  &= \int_p  e^{ipx}  \int_q  e^{iqy} \,  \frac{1}{p^2 + m^2} \cdot \tilde{\delta}(p + q) = \int_p \frac{e^{ip(x - y)}}{p^2 + m^2}
+\end{align}
+と Fourier 空間で展開できる．
+
+
+
+
 \end{document}

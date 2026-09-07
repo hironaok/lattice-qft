@@ -41,7 +41,8 @@
 
 \newpage
 
-\section{場の理論}
+\section{摂動計算の基礎}
+
 \subsection{多数の変数に支配される統計と摂動計算の一般論}
 いま，$N$個の確率変数$X = \qty(X_1, \cdots, X_N)$に支配される確率分布を考える．
 確率分布$P(X)$は次の形で与えられるとする．
@@ -82,22 +83,36 @@
 である．
 最右辺をどう計算するかが問題であるが正規分布の下で少々複雑な量の期待値を計算することに帰着されたので問題は大幅に簡略化されたといえる．
 
-以上が摂動的場の理論の根幹をなす考え方である．物理学者は$X = \qty(X_1, \cdots, X_N)$の添え字を連続に拡張し$X(x); \, x\in \mathbb{R}^n$に対して同様な計算手法を構築した．
+以上が摂動的場の理論の根幹をなす考え方である．
+物理学者は$X = \qty(X_1, \cdots, X_N)$の添え字を連続に拡張し$X = \qty(X_x); \, x\in \mathbb{R}^n$に対して同様な計算手法を構築した．
 それが経路積分である．
 経路積分は次のように表記されることが多い．
 \begin{align}
   Z = \int \mathscr{D}X \, e^{-S[X]}, \quad \ev{O(X)} = \int \mathscr{D}X \, O(X) e^{-S[X]}.
 \end{align}
 
-\subsection{Wick の定理}
-
+\subsection{ウィックの定理}
+以降では簡単のため，実スカラー場の理論を例にとって考える．
+自由場の理論は次で与えられる．
+\begin{align}
+  S_0[\varphi] = \frac{1}{2}\int \dd^4x \, \varphi(x) \qty(-\partial^2 + m^2) \varphi(x).
+\end{align}
+準備として次の公式を与えておく．
+\begin{align}
+  \varphi(x) e^{-S_0[\varphi]} = \int \dd^4y \, \varDelta(x - y) \frac{\delta}{\delta \varphi(y)} e^{-S_0[\varphi]}, \quad 
+\end{align}
+この理論の下での場の積の期待値は一般に
+\begin{align}
+  \ev{T \Big\{\varphi(x_1) \cdots \varphi(x_n)\Big\}}_0 = \frac{1}{Z} \int \mathscr{D} \varphi \, \varphi(x_1) \cdots \varphi(x_n) e^{-S_0[\varphi]}
+\end{align}
+である．
 
 \subsection{自由スカラー場のプロパゲーターの計算}
 自由スカラー場のプロパゲーターは次で定義される．
 \begin{align}
-  \ev{T\Big\{\varphi(x)\varphi(y)\Big\}}_0 = \frac{1}{Z}\int \mathscr{D} \varphi \,\varphi(x)\varphi(y) \exp{-\frac{1}{2}\int \dd^4x \, \varphi(x) \qty(-\partial^2 + m^2) \varphi(x)}.
+  \ev{T\Big\{\varphi(x)\varphi(y)\Big\}}_0 = \frac{1}{Z}\int \mathscr{D} \varphi \,\varphi(x)\varphi(y) \exp(-S_0[\varphi]), \quad S_0[\varphi] := \frac{1}{2}\int \dd^4x \, \varphi(x) \qty(-\partial^2 + m^2) \varphi(x)
 \end{align}
-計算上の利便のため，$\varphi$ を Fourier 変換しておく．
+計算上の利便のため，$\varphi$ をフーリエ変換しておく．
 自由場の作用は
 \begin{align}
   S_0[\varphi] &= \frac{1}{2}\int \dd^4x \, \varphi(x) \qty(-\partial^2 + m^2) \varphi(x) = \frac{1}{2}\int \dd^4x \, \int_p \tilde{\varphi}(p) e^{ipx} \qty(-\partial^2 + m^2) \int_q \tilde{\varphi}(q) e^{iqx} \notag \\
@@ -119,9 +134,9 @@
   &= \int_p  e^{ipx}  \int_q  e^{iqy} \, \tilde{\delta}(p + q) \int \mathscr{D} \tilde{\varphi} \, \tilde{\varphi}^2(p)\exp{-\frac{1}{2}\int_k  \qty(k^2 + m^2) \tilde{\varphi}^2(k)} \notag\\
   &= \int_p  e^{ipx}  \int_q  e^{iqy} \,  \frac{1}{p^2 + m^2} \cdot \tilde{\delta}(p + q) = \int_p \frac{e^{ip(x - y)}}{p^2 + m^2}
 \end{align}
-と Fourier 空間で展開できる．
+とフーリエ空間で展開できる．
 
-
+\section{格子計算の基礎}
 
 
 \end{document}

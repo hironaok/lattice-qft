@@ -1,51 +1,144 @@
-const slides = document.querySelectorAll(".slide");
-const pageNumber = document.getElementById("page-number");
+const mainSlides =
+    Array.from(document.querySelectorAll(".main-slide"));
 
-let currentSlide = Number(location.hash.slice(1)) || 0;
+const backupSlides =
+    Array.from(document.querySelectorAll(".backup-slide"));
 
-function showSlide(index) {
-    slides[currentSlide].classList.remove("active");
+const pageNumber =
+    document.getElementById("page-number");
 
-    currentSlide =
+const modeButton =
+    document.getElementById("mode-button");
+
+
+let mode = "main";
+
+let mainIndex = 0;
+let backupIndex = 0;
+
+
+function getSlides() {
+    return mode === "main"
+        ? mainSlides
+        : backupSlides;
+}
+
+
+function getIndex() {
+    return mode === "main"
+        ? mainIndex
+        : backupIndex;
+}
+
+
+function setIndex(index) {
+    if (mode === "main") {
+        mainIndex = index;
+    } else {
+        backupIndex = index;
+    }
+}
+
+
+function showSlide() {
+    const slides = getSlides();
+
+    document
+        .querySelectorAll(".slide")
+        .forEach(slide =>
+            slide.classList.remove("active")
+        );
+
+    let index = getIndex();
+
+    index =
         (index + slides.length) % slides.length;
 
-    slides[currentSlide].classList.add("active");
+    setIndex(index);
 
-    location.hash = currentSlide;
+    slides[index].classList.add("active");
 
-    updatePageNumber();
-}
-
-function updatePageNumber() {
     pageNumber.textContent =
-        `${currentSlide + 1} / ${slides.length}`;
+        `${index + 1} / ${slides.length}`;
+
+    history.replaceState(
+        null,
+        "",
+        `#${mode}-${index + 1}`
+    );
 }
 
-document.addEventListener("keydown", function(event) {
+
+function nextSlide() {
+    setIndex(getIndex() + 1);
+    showSlide();
+}
+
+
+function previousSlide() {
+    setIndex(getIndex() - 1);
+    showSlide();
+}
+
+
+function toggleMode() {
+    if (mode === "main") {
+        mode = "backup";
+        modeButton.textContent = "backup";
+    } else {
+        mode = "main";
+        modeButton.textContent = "main";
+    }
+
+    showSlide();
+}
+
+
+/* Keyboard */
+
+document.addEventListener("keydown", event => {
 
     if (
         event.key === "ArrowRight" ||
-        event.key === " " ||
-        event.key === "Enter"
+        event.key === " "
     ) {
-        showSlide(currentSlide + 1);
+        event.preventDefault();
+        nextSlide();
     }
 
     if (event.key === "ArrowLeft") {
-        showSlide(currentSlide - 1);
-    }
-
-    if (event.key === "Home") {
-        showSlide(0);
-    }
-
-    if (event.key === "End") {
-        showSlide(slides.length - 1);
+        event.preventDefault();
+        previousSlide();
     }
 });
 
-/* Show the saved slide when the page loads */
-slides.forEach(slide => slide.classList.remove("active"));
-slides[currentSlide].classList.add("active");
 
-updatePageNumber();
+/* Restore slide after F5 */
+
+function restoreSlide() {
+    const match =
+        location.hash.match(
+            /^#(main|backup)-(\d+)$/
+        );
+
+    if (!match) {
+        return;
+    }
+
+    mode = match[1];
+
+    const index = Number(match[2]) - 1;
+
+    if (mode === "main") {
+        mainIndex = index;
+        modeButton.textContent = "main";
+    } else {
+        backupIndex = index;
+        modeButton.textContent = "backup";
+    }
+}
+
+
+restoreSlide();
+showSlide();
+

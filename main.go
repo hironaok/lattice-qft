@@ -11,22 +11,15 @@ import (
 
 const (
 	Nconf = 860
-	Nx    = 16	
+	Nx    = 64
 	Ny    = 16
 	Nz    = 16	
 	Nt    = 4
 	Npos  = Nx / 2 + 1
 
-	T0    = 0.76
-	T1    = 0.80
-	T2    = 0.84
-	T3    = 0.93
-	T4    = 0.99
-	T5    = 1.08
-	T6    = 1.20
-	T7    = 1.35
-	T8    = 1.69
-	T9    = 2.07
+	T0    = 0.70
+	T1    = 1.20
+	T2    = 3.01
 )
 
 func main() {
@@ -96,7 +89,7 @@ func Display(records ...[]complex128) {
 func RescaleLength(record []complex128) []complex128 {
         values := make([]complex128, Npos)
         for ipos := 0; ipos < Npos; ipos++ {
-                values[ipos] = record[ipos] / (Nt * T6)
+                values[ipos] = record[ipos] / (Nt * T1)
         }
         return values
 }
@@ -104,7 +97,7 @@ func RescaleLength(record []complex128) []complex128 {
 func RescaleCorrelator(record []complex128) []complex128 {
         values := make([]complex128, Npos)
         for ipos := 0; ipos < Npos; ipos++ {
-                values[ipos] = record[ipos] * complex(math.Pow(Nt * T6, 6), 0)
+                values[ipos] = record[ipos] * complex(math.Pow(Nt * T1, 6), 0)
         }
         return values
 }

@@ -36,6 +36,7 @@ plot.ylabel(
     fontsize = 15,
     labelpad = 5
 )
+
 # plot.grid()
 
 figname = Path(sys.argv[1]).stem

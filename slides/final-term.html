@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>スライド</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- MathJax -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']]
+            }
+        };
+    </script>
+
+    <script
+        async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+
+<body>
+
+    <!-- ==================== -->
+    <!-- Main slides          -->
+    <!-- ==================== -->
+
+    <section class="slide main-slide title-slide">
+        <h1>タイトル</h1>
+        <h2>－ サブタイトル －</h2>
+
+        <p>
+	  大阪大学 理学研究科 物理学専攻 原子核理論研究室<br>
+	  大和 寛尚
+	</p>
+        <p>
+	  スライドのソースファイルは<a href="https://hironaok.github.io/lattice-qcd">こちら</a>
+	</p>
+    </section>
+
+    <section class="slide main-slide">
+      <h1>スライド</h1>
+      <p>
+	スライドを閲覧するには<a href="https://hironaok.github.io/tmp">こちら</a>にアクセスしてください：<br>
+	<code>https://hironaok.github.io/tmp</code>
+      </p>
+    </section>
+
+    <section class="slide main-slide">
+      <h1>目次</h1>
+      <p>...</p>
+    </section>
+
+
+    <!-- ==================== -->
+    <!-- Backup slides        -->
+    <!-- ==================== -->
+
+    <section class="slide backup-slide">
+        <h1>バックアップ</h1>
+
+        <p>...</p>
+    </section>
+
+
+    <!-- Navigation -->
+
+    <div class="navigation">
+        <button onclick="previousSlide()"><</button>
+        <button onclick="nextSlide()">></button>
+    </div>
+
+    <button id="mode-button" onclick="toggleMode()">
+      main
+    </button>
+
+    <div id="page-number"></div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

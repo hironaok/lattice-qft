@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.141592653-p4.1.0-u1.29-230214-2.6 (utf8.euc) (TeX Live 2023/Debian) (preloaded format=platex 2026.4.10)  1 SEP 2026 18:17
+This is e-upTeX, Version 3.141592653-p4.1.0-u1.29-230214-2.6 (utf8.euc) (TeX Live 2023/Debian) (preloaded format=platex 2026.4.10)  4 SEP 2026 17:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -343,11 +343,11 @@ File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 
  [2]
 LaTeX Font Info:    Font shape `JT1/gt/bx/n' in size <12> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 45.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 46.
 LaTeX Font Info:    Font shape `JY1/gt/bx/n' in size <12> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 45.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 46.
 
-Overfull \hbox (12.86081pt too wide) detected at line 81
+Overfull \hbox (12.86081pt too wide) detected at line 82
 []
  []
 
@@ -361,10 +361,10 @@ L3 programming layer <2024-01-22>
 Here is how much of TeX's memory you used:
  5648 strings out of 474880
  88564 string characters out of 5763303
- 1934820 words of memory out of 5000000
+ 1938820 words of memory out of 5000000
  27838 multiletter control sequences out of 15000+600000
  576078 words of font info for 108 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
  79i,14n,93p,330b,256s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.dvi (4 pages, 12292 bytes).
+Output written on main.dvi (4 pages, 13512 bytes).

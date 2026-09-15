@@ -1,7 +1,10 @@
 import argparse
+import pathlib
 
 import matplotlib.pyplot as plot
 import numpy as np
+
+
 
 EXAMPLE_FILE = "demo.dat"
 
@@ -13,6 +16,7 @@ def main():
     parser.add_argument('filenames', nargs = '+', type = str, default = EXAMPLE_FILE)
     parser.add_argument('-s', '--start', type = int, default = MIN_DISTANCE)
     parser.add_argument('-e', '--end',   type = int, default = MAX_DISTANCE)
+    parser.add_argument('-t', '--temperature', type = str)
     args = parser.parse_args()
 
     plot.rcParams['text.usetex'] = True
@@ -20,21 +24,28 @@ def main():
 
     for i, fn in enumerate(args.filenames):
         data = np.loadtxt(fn, dtype = float)
+        
         X = data[args.start:args.end, 1]
         Y = data[args.start:args.end, 3]
         E = data[args.start:args.end, 5]
 
+        L = pathlib.Path(fn).stem
+
+        
         ax.errorbar(
             X,
             Y,
-            xerr = None,
-            yerr = E,
-            capsize = 5,
-            fmt = 'o',
-            markersize = 5
+            xerr       = None,
+            yerr       = E,
+            capsize    = 5,
+            fmt        = 'o',
+            markersize = 3,
+            label = L
         )
 
     ax.grid()
+
+    ax.legend()
     
     ax.ticklabel_format(
         axis="y",
@@ -43,7 +54,7 @@ def main():
     )
     
     ax.set_title(
-        r"The density-density correlator $\left<\rho_u(x)\rho_u(0)\right>$ (connected)",
+        r"The density-density correlator at $T = " + args.temperature + r"\,T_\mathrm{pc}$",
         fontsize = 15
     )
     
@@ -53,7 +64,7 @@ def main():
     )
     
     ax.set_ylabel(
-        r"$\left<\mathrm{tr}\left\{\gamma_5\gamma_0 S_u(x, 0)\gamma_0\gamma_5S_u(x, 0)^\dagger\right\}\right>_\mathrm{gauge}$",
+        r"Connected/disconnected part of $\left<\rho(x)\rho(0)\right>$",
         fontsize = 15
     )
     fig.savefig('plot.png', dpi = 200)

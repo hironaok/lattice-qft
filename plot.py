@@ -21,7 +21,9 @@ def main():
 
     plot.rcParams['text.usetex'] = True
     fig, ax = plot.subplots()
+    axzoom = ax.inset_axes([0.3, 0.3, 0.6, 0.5])
 
+    colors = ["red", "blue"]
     for i, fn in enumerate(args.filenames):
         data = np.loadtxt(fn, dtype = float)
         
@@ -40,11 +42,35 @@ def main():
             capsize    = 5,
             fmt        = 'o',
             markersize = 3,
-            label = L
+            label = L,
+            color = colors[i],
+            alpha = 0.5
         )
 
-    ax.grid()
+        axzoom.errorbar(
+            X,
+            Y,
+            xerr       = None,
+            yerr       = E,
+            capsize    = 5,
+            fmt        = 'o',
+            markersize = 3,
+            label = L,
+            color = colors[i],
+            alpha = 0.5
+        )
+        
 
+    axzoom.set_xlim(0.9, 1.75)
+    
+    axzoom.set_ylim(-1.15, 1.55)
+
+    axzoom.grid()
+
+    ax.indicate_inset_zoom(axzoom)
+
+    ax.grid()
+    
     ax.legend()
     
     ax.ticklabel_format(

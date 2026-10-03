@@ -3,3 +3,4 @@ main.pdf: main.dvi
 
 main.dvi: main.tex
 	platex main.tex
+	platex main.tex

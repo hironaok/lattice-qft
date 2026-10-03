@@ -1,7 +1,8 @@
 package main
 
 import (
-	"bufio"	
+	"bufio"
+	"flag"
 	"fmt"
 	"math"
 	"os"
@@ -10,62 +11,77 @@ import (
 )
 
 const (
-	Nconf = 583
-	Nx    = 64
+	Nx    = 48
 	Ny    = 16
 	Nz    = 16	
 	Nt    = 4
 	Npos  = Nx / 2 + 1
 
-	T0    = 0.70
+	T0    = 0.76
 	T1    = 1.20
-	T2    = 3.01
+	T2    = 1.69
+	T3    = 3.01
 )
 
 func main() {
+	var Nconf int
+	var temp, part string
+
+	flag.IntVar(&Nconf, "n", 0, "number of configurations")
+	flag.StringVar(&temp, "t", "", "temperature")
+	flag.StringVar(&part, "p", "", "connected or disconnected")
+	flag.Parse()
+	
 	correlator := make([][]complex128, Nconf)
 	for iconf := 0; iconf < Nconf; iconf++ {
-		correlator[iconf] = make([]complex128, Nx)
-		file, err := os.Open(fmt.Sprintf("/home/hironao/lattice-qft/per-configuration/T1/conn/%d.dat", iconf))
+		data, err := Parse(fmt.Sprintf("/home/hironao/lattice-qft/data/%s/%s/%d.dat", temp, part, iconf))
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			os.Exit(1)
 		}
-		defer file.Close()
-
-		scanner := bufio.NewScanner(file)
-                for i:= 0; i < Nx; i++ {
-                        scanner.Scan()
-                        line := strings.Split(strings.TrimSpace(scanner.Text()), "   ")
-
-                        re, err := strconv.ParseFloat(strings.TrimSpace(line[1]), 64)
-                        if err != nil {
-                                fmt.Fprintf(os.Stderr, "%v\n", err)
-                                os.Exit(1)
-                        }
-                        im, err := strconv.ParseFloat(strings.TrimSpace(line[2]), 64)
-                        if err != nil {
-                                fmt.Fprintf(os.Stderr, "%v\n", err)
-                                os.Exit(1)
-                        }
-			(correlator[iconf])[i] = complex(re, im)
-                }
-                if err := scanner.Err(); err != nil {
-                        fmt.Fprintf(os.Stderr, "%v\n", err)
-                        os.Exit(1)
-                }		
+		correlator[iconf] = data
+        }
+	
+	pos := make([]complex128, Npos)
+	for ipos := 0; ipos < Npos; ipos++ {
+		pos[ipos] = complex(float64(ipos), 0)
 	}
 
 	ensemble := NewEnsemble(correlator)
 	average  := ensemble.Average()
 	error    := ensemble.Error()
 
-	pos := make([]complex128, Npos)
-	for ipos := 0; ipos < Npos; ipos++ {
-		pos[ipos] = complex(float64(ipos), 0)
+	Display(RescaleLength(pos, T0), RescaleLength(pos, T1), RescaleLength(pos, T2), RescaleLength(pos, T3))
+}
+
+func Parse(filename string) ([]complex128, error) {
+	f, err := os.Open(filename)
+	if err != nil {
+		return nil, err
 	}
-	
-	Display(RescaleLength(pos), RescaleCorrelator(average), RescaleCorrelator(error))
+	defer f.Close()
+
+	data := make([]complex128, Nx)
+	scanner := bufio.NewScanner(f)
+	for i := 0; i < Nx; i++ {
+		scanner.Scan()
+		line := strings.Split(strings.TrimSpace(scanner.Text()), "   ")
+		re, err := strconv.ParseFloat(strings.TrimSpace(line[1]), 64)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+			os.Exit(1)
+		}
+		im, err := strconv.ParseFloat(strings.TrimSpace(line[2]), 64)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "%v\n", err)
+			os.Exit(1)
+		}
+		data[i] = complex(re, im)
+	}
+	if err := scanner.Err(); err != nil {
+		return nil, err
+	}
+	return data, nil
 }
 
 func Display(records ...[]complex128) {
@@ -78,18 +94,18 @@ func Display(records ...[]complex128) {
         }
 }
 
-func RescaleLength(record []complex128) []complex128 {
+func RescaleLength(record []complex128, temp float64) []complex128 {
         values := make([]complex128, Npos)
         for ipos := 0; ipos < Npos; ipos++ {
-                values[ipos] = record[ipos] / (Nt * T1)
+                values[ipos] = record[ipos] / complex(Nt * temp, 0)
         }
         return values
 }
 
-func RescaleCorrelator(record []complex128) []complex128 {
+func RescaleCorrelator(record []complex128, temp float64) []complex128 {
         values := make([]complex128, Npos)
         for ipos := 0; ipos < Npos; ipos++ {
-                values[ipos] = record[ipos] * complex(math.Pow(Nt * T1, 6), 0)
+                values[ipos] = record[ipos] * complex(math.Pow(Nt * temp, 6), 0)
         }
         return values
 }

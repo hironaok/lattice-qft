@@ -31,6 +31,7 @@
 \setcounter{tocdepth}{3}
 
 \titleformat{\section}{\Large\bfseries\centering}{\thesection}{1em}{}
+\titleformat{\subsection}{\bfseries}{\thesubsection}{1em}{}
 
 \begin{document}
 \centerline{{\large 修士論文}}
@@ -77,40 +78,235 @@ $Z$ は
 この場合にはハミルトニアンではなくラグランジアンが主役になる．
 そのためには分配関数の定義 \eqref{def:pf} を次のように書き直してみる．
 \begin{align}
-  Z = \Tr e^{-\beta H} = \sum_\varphi \bra{\varphi} e^{-\beta H} \ket{\varphi}
+  Z = \Tr e^{-\beta H} = \int \dd\varphi \,  \bra{\varphi} e^{-\beta H} \ket{\varphi}.
+\end{align}
+これを変形して $Z$ の経路積分形式を導くわけであるが，そのためにハミルトニアンが場 $\varphi$ と正準運動量 $\pi = \partial_t \varphi$ の関数であることを明示的に書いておく．
+\begin{align}
+  Z = \int \dd\varphi \, \bra{\varphi} e^{-\beta H(\varphi, \pi)} \ket{\varphi}.
+\end{align}
+いま，被積分関数 $\bra{\varphi} e^{-\beta H} \ket{\varphi}$ に注目すると
+\begin{align}
+  \bra{\varphi} e^{-\beta H(\varphi, \pi)} \ket{\varphi} = \bra{\varphi} \qty{e^{-\varDelta t H(\varphi, \pi)}}^N \ket{\varphi}, \quad \varDelta t \equiv \frac{\beta}{N}
+\end{align}
+と書けて，微小な時間発展の演算子 $e^{-\varDelta t H(\varphi, \pi)}$ を多数掛け合わせているとみなせる．
+いま，完全性の関係式 ${\displaystyle \int \dd\varphi_k \, \ket{\varphi_k, t_k}\bra{\varphi_k, t_k} = 1}$ をはさみこんで次を得る．
+\begin{align}
+  \int \dd \varphi_N \cdots \int \dd \varphi_1 \, \bra{\varphi} e^{-\varDelta t H(\varphi, \pi)}\ket{\varphi_k, t_k}
 \end{align}
 
-%% COMMENT: HTL のことも書いてもよいかなぁ
+
+\subsection{量子色力学の系の統計力学}
+
+\subsection{硬熱ループ近似による計算}
+
 \newpage
-\section{格子ゲージ理論}
+\section{格子ゲージ理論による計算}
 
+\subsection{格子上のフェルミオン場}
+
+\subsection{格子上のゲージ場}
+
+\subsection{数値シミュレーションの方法}
 
 \newpage
-\section{プラズマ物理の方法}
+
+\section{古典的な液体物性論からの理解}
 
 
+%% COMMENT: 古典的な液体・気体の理論のアナロジーで QGP の性質を探る方法について記す；M. H. Thoma の論文あたり．
 \newpage
 \vfill
 \centerline{\LARGE \textbf{第2部}}
 \bigskip
-\centerline{\LARGE \textbf{数値シミュレーションによる QGP の性質の探求}}
+\centerline{\LARGE \textbf{数値シミュレーションによる QGP 物性の研究}}
 \vfill
-\addcontentsline{toc}{section}{第2部 数値シミュレーションによる QGP の性質の探求}
+\addcontentsline{toc}{section}{第2部 数値シミュレーションによる QGP 物性の研究}
 
 \newpage
 
 \section{計算する物理量}
+以降では本修士論文の主題である数値シミュレーションについて説明する．
+まず，この節では計算する物理量がいかなるものであるかを説明する．
+
+\subsection{クォーク数密度演算子の空間相関}
+いったん，カラー・フレーバーの自由度を考えないことにすると，我々が計算するのはクォーク数密度演算子の空間相関である．
+つまり
+\begin{align}
+  \ev{\rho(t, \vec{r})\rho(t, \vec{0})}; \quad \rho(t, \vec{r}) = \overline{q(t, \vec{r})} \gamma_0 q(t, \vec{r})
+  \label{def:correlation}
+\end{align}
+を計算する．
+しかし，カラー・フレーバーの自由度がある場合についても同様の考察が可能である．
+クォーク数密度演算子の空間相関の定義 \eqref{def:correlation} を経路積分の形式で書くと
+\begin{align}
+  \ev{\rho(t, \vec{r})\rho(t, \vec{0})} &= \frac{1}{Z}\int \mathscr{D}q \int \mathscr{D}\overline{q} \int \mathscr{D} U \,
+  e^{- S_\mathrm{g}[U] - S_\mathrm{q}[q, \overline{q}, U]} \rho(t, \vec{r})\rho(t, \vec{0});\notag\\
+  &\quad\quad\quad\quad\quad\quad\quad\quad S_\mathrm{q}[q, \overline{q}, U] = \int \dd t \int \dd^3r \int \dd t' \int \dd^3r' \, \overline{q(t, \vec{r})} D[U](t, \vec{r}; t', \vec{r}') q(t', \vec{r}')
+\end{align}
+である．
+これは次の書き換えが可能である．
+\begin{align}
+  \ev{\rho(t, \vec{r})\rho(t, \vec{0})} &= \frac{1}{Z} \int \mathscr{D} U \, e^{-S_\mathrm{g}[U]} \det D[U] \qty{\frac{1}{\det D[U]} \int \mathscr{D}q \int \mathscr{D}\overline{q}\, e^{-S_\mathrm{q}[q, \overline{q}, U]}\rho(t, \vec{r})\rho(t, \vec{0})} \notag\\
+  &= \Big<\ev{\rho(t, \vec{r})\rho(t, \vec{0})}_\mathrm{quark}\Big>_\mathrm{gauge} = \Big<\ev{\overline{q(t, \vec{r})} \gamma_0 q(t, \vec{r}) \overline{q(t, \vec{0})} \gamma_0 q(t, \vec{0})}_\mathrm{quark}\Big>_\mathrm{gauge}.
+\end{align}
+ただし
+\begin{align}
+  \big<\cdot\big>_\mathrm{quark} = \frac{1}{\det D[U]} \int \mathscr{D}q \int \mathscr{D}\overline{q}\, e^{-S_\mathrm{q}[q, \overline{q}, U]}\, \qty(\,\cdot\,), \quad \big<\cdot\big>_\mathrm{gauge} = \frac{1}{Z} \int \mathscr{D} U \, e^{-S_\mathrm{g}[U]} \det D[U] \, (\,\cdot\,)
+\end{align}
+である．
+
+格子 QCD のフレームワークでは Feynman 伝播関数を計算できるようになっていることが多い．
+いま，$\ev{\,\cdot\,}_\mathrm{quark}$ は $q, \overline{q}$ の双一次形式であるので Wick 縮約により Feynman 伝播関数の積に分解することができる．
+そのためにまずスピノルの自由度を明示的に書くことにすると
+\begin{align}
+  \ev{\overline{q(t, \vec{r})} \gamma_0 q(t, \vec{r}) \overline{q(t, \vec{0})} \gamma_0 q(t, \vec{0})}_\mathrm{quark} = \sum_{\alpha, \beta, \alpha', \beta'} \qty(\gamma_0)_{\alpha\beta} \qty(\gamma_0)_{\alpha'\beta'} \ev{\overline{q(t, \vec{r})}_\alpha q(t, \vec{0})_\beta\overline{q(t, \vec{0})}_{\alpha'}q(t, \vec{0})_\beta}_\mathrm{quark}
+\end{align}
+である．Wick 縮約によって
+\begin{align}
+  &\ev{\overline{q(t, \vec{r})}_{\alpha}q(t, \vec{0})_\beta\overline{q(t, \vec{0})}_{\alpha'}q(t, \vec{0})_{\beta'}}_\mathrm{quark}\notag\\
+  &\quad\quad\quad\quad= -\sum_{\alpha,\beta, \alpha' \beta'}\qty(\gamma_0)_{\alpha'\beta'}S_\mathrm{q}(t, 0; t, \vec{r})_{\beta'\alpha}\qty(\gamma_0)_{\alpha\beta}S_\mathrm{q}(t, \vec{r}; t, 0)_{\beta\alpha'} \notag\\
+  &\quad\quad\quad\quad\quad\quad\quad\quad+ \sum_{\alpha,\beta,\alpha',\beta'}\qty(\gamma_0)_{\alpha\beta}S_\mathrm{q}(t, \vec{r}; t, \vec{r})_{\alpha\beta}\qty(\gamma_0)_{\alpha'\beta'}S_\mathrm{q}(t, 0; t, 0)_{\alpha'\beta'} \notag\\
+  &\quad\quad\quad\quad= -\Tr \qty{\gamma_0 S_\mathrm{q}(t, \vec{0}; t, \vec{r})\gamma_0 S_\mathrm{q}(t, \vec{r}; t, \vec{0})} + \Tr \Big\{\gamma_0 S_\mathrm{q}(t, \vec{r}; t, \vec{r})\Big\} \Tr \qty{\gamma_0 S_\mathrm{q}(t, \vec{0}; t, \vec{0})}
+\end{align}
+と書ける．
+ただし，$S_\mathrm{q}(t, \vec{r}; t', \vec{r}')$ は Feynman 伝播関数である．
+こうして結局のところ，計算すべき量は次のように書ける．
+\begin{align}
+  \ev{\rho(t, \vec{r})\rho(t, \vec{0})} = \ev{-\Tr \qty{\gamma_0 S_\mathrm{q}(t, \vec{0}; t, \vec{r})\gamma_0 S_\mathrm{q}(t, \vec{r}; t, \vec{0})} + \Tr \Big\{\gamma_0 S_\mathrm{q}(t, \vec{r}; t, \vec{r})\Big\} \Tr \qty{\gamma_0 S_\mathrm{q}(t, \vec{0}; t, \vec{0})}}_\mathrm{gauge}. \label{def:contract}
+\end{align}
+つまり，各ゲージ配位に対して Feynman 伝播関数を何らかの方法で計算し，$\gamma_0$ を乗じて $\Tr$ を取ったものなどの平均（アンサンブル平均という）を計算すればよいということがわかる．
+ここで，対応する Feynman グラフの形状に対応させて \eqref{def:contract} の第1項を連結部分，第2項を非連結部分と呼ぶことにする．
+
+\subsection{カラー3・フレーバー2}
+前小節では簡単のためカラーとフレーバーの自由度を考えることをしなかった．
+しかし，実際に計算するのはカラー3（つまり QCD），フレーバー2の系のクォーク数密度演算子の空間相関である．
+前小節の議論とほぼ平行にこれを論じることができるが，フレーバーが2であること，つまり up クォークと down クォークを考えることによって生じる影響には言及しておかなければならない．
+
+まず，up クォークの場を $u(t, \vec{r})$，down クォークの場を $d(t, \vec{r})$ と書くことにすると，全クォーク数密度演算子が次で定められることに注意する．
+\begin{align}
+  \rho(t, \vec{r}) = \overline{u(t, \vec{r})} \gamma_0 u(t, \vec{r}) + \overline{d(t, \vec{r})} \gamma_0 d(t, \vec{r})
+\end{align}
+すると，空間相関は
+\begin{align}
+  \ev{\rho(t, \vec{r})\rho(t, \vec{0})} 
+  &= \left\langle
+  \overline{u(t,\vec r)}\gamma_0 u(t,\vec r)\,
+  \overline{u(t,\vec 0)}\gamma_0 u(t,\vec 0)
+  \right\rangle
+  +
+  \left\langle
+  \overline{u(t,\vec r)}\gamma_0 u(t,\vec r)\,
+  \overline{d(t,\vec 0)}\gamma_0 d(t,\vec 0)
+  \right\rangle
+  \notag\\
+  &\quad\quad+
+  \left\langle
+  \overline{d(t,\vec r)}\gamma_0 d(t,\vec r)\,
+  \overline{u(t,\vec 0)}\gamma_0 u(t,\vec 0)
+  \right\rangle
+  +
+  \left\langle
+  \overline{d(t,\vec r)}\gamma_0 d(t,\vec r)\,
+  \overline{d(t,\vec 0)}\gamma_0 d(t,\vec 0)
+  \right\rangle .
+\end{align}
+前小節でやったように，これの各項に対して Wick 縮約を行うと異なるフレーバーのクォークの Feynman 伝播関数は存在しないことに注意すると次を得る．
+\begin{align}
+    \langle \rho(t, \vec{r})\rho(t, \vec{0})\rangle
+  ={}&
+  -\left\langle
+  \operatorname{Tr}\!\left\{
+  \gamma_0 S_\mathrm{u}(t, \vec{r},t, \vec{0})\gamma_0 S_\mathrm{u}(t, \vec{0},t, \vec{r})
+  \right\}
+  \right\rangle_\mathrm{gauge}
+  -
+  \left\langle
+  \operatorname{Tr}\!\left\{
+  \gamma_0 S_\mathrm{d}(t, \vec{r},t, \vec{0})\gamma_0 S_\mathrm{d}(t, \vec{0},t, \vec{r})
+  \right\}
+  \right\rangle_\mathrm{gauge}
+  \notag\\
+  &+
+  \left\langle
+  \operatorname{Tr}\!\Big\{\gamma_0 S_\mathrm{u}(t, \vec{r},t, \vec{r})\Big\}
+  \operatorname{Tr}\!\left\{\gamma_0 S_\mathrm{u}(t, \vec{0},t, \vec{0})\right\}
+  \right\rangle_\mathrm{gauge}
+  +
+  \left\langle
+  \operatorname{Tr}\!\Big\{\gamma_0 S_\mathrm{u}(t, \vec{r},t, \vec{r})\Big\}
+  \operatorname{Tr}\!\left\{\gamma_0 S_\mathrm{d}(t, \vec{0},t, \vec{0})\right\}
+  \right\rangle_\mathrm{gauge}
+  \notag\\
+  &+
+  \left\langle
+  \operatorname{Tr}\!\Big\{\gamma_0 S_\mathrm{d}(t, \vec{r},t, \vec{r})\Big\}
+  \operatorname{Tr}\!\left\{\gamma_0 S_\mathrm{u}(t, \vec{0},t, \vec{0})\right\}
+  \right\rangle_\mathrm{gauge}
+  +
+  \left\langle
+  \operatorname{Tr}\!\Big\{\gamma_0 S_\mathrm{d}(t, \vec{r},t, \vec{r})\Big\}
+  \operatorname{Tr}\!\left\{\gamma_0 S_\mathrm{d}(t, \vec{0},t, \vec{0})\right\}
+  \right\rangle_\mathrm{gauge}.
+\end{align}
+ただし，$S_\mathrm{u}$ や $S_\mathrm{d}$ はそれぞれ up クォーク，down クォークの Feynman 伝播関数である．
+ここで，我々の計算では，簡単のためアイソスピン対称性を課す．
+つまり，$m_\mathrm{u} = m_\mathrm{d}$ であるとして計算する．
+よって，Feynman 伝播関数は up クォークと down クォークで同じであり，結局のところ，全クォーク数密度演算子の空間相関は次のように簡潔な表示を持つことになる．
+\begin{align}
+    \left\langle
+  \rho(t,\vec r)\rho(t,\vec 0)
+  \right\rangle
+  ={}&
+  -2\left\langle
+  \operatorname{Tr}
+  \left\{
+  \gamma_0
+  S_\mathrm{q}(t,\vec r;\,t,\vec 0)
+  \gamma_0
+  S_\mathrm{q}(t,\vec 0;\,t,\vec r)
+  \right\}
+  \right\rangle_\mathrm{gauge}
+  +
+  4\left\langle
+  \operatorname{Tr}
+  \Big\{
+  \gamma_0
+  S_\mathrm{q}(t,\vec r;\,t,\vec r)
+  \Big\}
+  \operatorname{Tr}
+  \left\{
+  \gamma_0
+  S_\mathrm{q}(t,\vec 0;\,t,\vec 0)
+  \right\}
+  \right\rangle_\mathrm{gauge} .
+\end{align}
+
+これで計算すべき量が明らかになった．
+とにかく，連結部分と非連結部分をそれぞれ別々に計算しておけばあとはどうにでもなるというわけである．
+
+クォーク数密度演算子の空間相関に関連する解析的な計算はここまでである．
 
 \newpage
 \section{数値シミュレーションのセットアップ}
+この節では主に実際に行った数値シミュレーションの詳細なセットアップについて説明する．
+この節はその内容の性質上，単純な情報の羅列になる．
+
+ここで1つの注意をしておく．格子 QCD の数値シミュレーションにおいては様々な近似が行われることがあるが，本修士論文に係る研究で行った数値シミュレーションは近似なしの完全な QCD の計算である．
+
+\subsection{作用の選択}
+
+\subsection{物理的なパラメーターのセットアップ}
+
+\subsection{その他}
 
 \newpage
-\section{考察}
+\section{結果・考察}
+
 
 \newpage
 \noindent
 \textbf{謝辞・あとがき} \quad まず，私の修士論文の指導にあたってくださった，浅川正之教授と松江高等専門学校の赤松幸尚氏に最大限の感謝を表する．
-加えて，素晴らしい学生生活を共にした友人たちにも感謝する．
+加えて，研究室の教員・スタッフの皆様，そして，素晴らしい学生生活を共にした友人たちにも感謝する．
 
 この修士論文のプロジェクトの過程では数多くのツールが用いられたが，ここでは特にコンピューターに関連する優れたツールに注目したい．
 論文の入手，スーパーコンピューター上での数値シミュレーションプログラムの実行，本修士論文の執筆のすべては Linux カーネルの存在なしにはなしえなかったことだ．
@@ -121,4 +317,6 @@ Linux カーネルは 1991 年に Helsinki 大学の計算機科学専攻の学�
 現在では世界中に数千人の開発者がいる．
 現在では Torvalds が書いたコードは Linux カーネルのソースコードのうちのごく一部でしかなく，ほかの開発者の貢献なしに我々がその利便性を経験することができないのは確かだが，もっと重要ななの Torvalds がそれを創始したということだ．
 彼に最大限の敬意と感謝を表する．
+
+最後に大学院修士課程卒業まで支えてきてくれた両親にこの場を借りて感謝の意を表します．
 \end{document}

@@ -156,7 +156,7 @@ $Z$ は
 である．
 
 格子 QCD のフレームワークでは Feynman 伝播関数を計算できるようになっていることが多い．
-いま，$\ev{\,\cdot\,}_\mathrm{quark}$ は $q, \overline{q}$ の双一次形式であるので Wick 縮約により Feynman 伝播関数の積に分解することができる．
+いま，作用$S_\mathrm{q}$ がは $q, \overline{q}$ の双一次形式であるので，$\ev{\,\cdot\,}_\mathrm{quark}$ は Wick 縮約により Feynman 伝播関数の積に分解することができる．
 そのためにまずスピノルの自由度を明示的に書くことにすると
 \begin{align}
   \ev{\overline{q(t, \vec{r})} \gamma_0 q(t, \vec{r}) \overline{q(t, \vec{0})} \gamma_0 q(t, \vec{0})}_\mathrm{quark} = \sum_{\alpha, \beta, \alpha', \beta'} \qty(\gamma_0)_{\alpha\beta} \qty(\gamma_0)_{\alpha'\beta'} \ev{\overline{q(t, \vec{r})}_\alpha q(t, \vec{0})_\beta\overline{q(t, \vec{0})}_{\alpha'}q(t, \vec{0})_\beta}_\mathrm{quark}
@@ -294,10 +294,67 @@ $Z$ は
 ここで1つの注意をしておく．格子 QCD の数値シミュレーションにおいては様々な近似が行われることがあるが，本修士論文に係る研究で行った数値シミュレーションは近似なしの完全な QCD の計算である．
 
 \subsection{作用の選択}
+我々の数値シミュレーションには RG 改良グルーオン作用とクローバー改良 Wilson クォーク作用が用いられた．
+RG 改良グルーオン作用は
+\begin{align}
+  S_\mathrm{g} = -\beta \qty{c_0 \sum_{x, \mu < \nu} W_{\mu\nu}^{1\times 1}(x) + c_1\sum_{x, \mu, \nu}W_{\mu\nu}^{1 \times 2}(x)}
+\end{align}
+である．
+ここで $\beta$ は温度ごとに定められた定数，$c_0, c_1$ はすべての温度に共通の定数であって，$c_0 = 3.648, \, c_1 = -0.331$ である．
+クローバー改良 Wilson クォーク作用は
+\begin{align}
+  S_\mathrm{q} &= \sum_{x, y} \overline{q_x} D_{x, y} q_y;\\
+  D_{x,y} &= \delta_{x,y} - K\sum_{\mu}\Big\{\qty(1-\gamma_\mu)U_{x,\mu}\delta_{x + \hat{\mu}, y}
+                                            + (1+\gamma_\mu)U^\dagger_{x, \mu}\delta_{x, y + \hat{\mu}}\Big\} - \delta_{x,y}c_\mathrm{SW} K \sum_{\mu < \nu} \sigma_{\mu\nu} F_{\mu\nu}
+\end{align}
+である．
+ここで，$K, c_\mathrm{SW}$ は温度ごとに定められた定数（$K$ はホッピングパラメーター，$c_\mathrm{SW}$ はクローバー係数と呼ばれる），$F_{\mu\nu}$ は格子上で離散化された場の強さテンソルである．
 
-\subsection{物理的なパラメーターのセットアップ}
+
+\subsection{シミュレーション・物理的パラメーターのセットアップ}
+\begin{table}[b]
+  \caption{シミュレーション・パラメーター}
+  \label{table:parameters}  
+  \centering
+  \begin{tabular}{ccccccc}
+    \hline\hline
+    $T$                     & $\beta$ & $K$           & $c_\mathrm{SW}$ & Traj. & Therm. & \\
+    \hline
+    $0.76 \, T_\mathrm{pc}$ & 1.50    & $0.143\,480$  &  $1.853\,545$   & 10200  & 200    & \\
+    $1.20 \, T_\mathrm{pc}$ & 1.95    & $0.137\,716$  &                 & 10200  & 200    & \\
+    $1.69 \, T_\mathrm{pc}$ & 2.10    & $0.135\,860$  &                 & 10200  & 200    & \\
+    \hline
+    \hline
+  \end{tabular}
+\end{table}
+我々は $T = 0.76 \, T_\mathrm{pc}, 1.20 \, T_\mathrm{pc}, 1.69 \, T_\mathrm{pc}$ の 3 つの温度でシミュレーションを行った．
+格子の大きさは $N_x = 48, N_y = N_z = 16, N_t = 4$ として時刻 $0$ における $x$ 方向の相関のみを計算することにした．
+つまり，実際に計算されたのは
+\begin{align}
+  \ev{\rho(0, \vec{r} = \qty(x, 0, 0))\rho(0, \vec{0} = \qty(0, 0, 0))}
+\end{align}
+である．
+格子のインデックス $n = 0, 1, \cdots, N_x$（$y, z, t$ 方向についても同様）は温度 $T$ ごとに物理的な値大きさへの変換が必要である．
+ここでは擬臨界温度の逆数を単位としたスケールへの変換をする．
+物理的な距離スケール $x$ と格子のインデックス $n$ は格子間隔 $a$ で $x = na$ の関係で結ばれている．
+一方，格子間隔 $a$ と温度 $T$ は $T = \qty(aN_t)^{-1}$ の関係で結ばれている．
+よって，$a = \qty(N_t T)^{-1}$ の関係を用いて，格子のインデックス $n$ を物理的な距離スケール $x$ に変換することができる．
+\begin{align}
+  x = na = \frac{n}{N_t T}
+\end{align}
+ただし，我々が温度のデータとして持ち合わせているのは $T/T_\mathrm{pc}$ にスケーリングされているものなので，次のようにスケーリングしておく．
+\begin{align}
+  x = \frac{n}{N_t \cdot (T / T_\mathrm{pc})} \quad \Big[1/T_\mathrm{pc}\Big].
+\end{align}
+格子のインデックスと物理的なスケールの温度ごとの対応表を付録 \ref{appendix:} に記す．
+
+シミュレーションにおけるパラメーターのチューニングを自前で行うことはせず，文献 \ref{bib:} を参考にした．
+対応するパラメーターを表 \ref{table:parameters} に記す．
+ゲージ配位はハイブリッド Monte Carlo（hybrid Monte Carlo；HMC）法によって行われた．
+表 \ref{table:parameters} 中の Traj. は HMC において更新を行った軌跡（trajectory）数，Therm. は熱化（thermalization）段階であるとして破棄した軌跡数である．
 
 \subsection{その他}
+本研究の数値シミュレーションには 2008 年から国内で開発が進む格子 QCD コードセット Bridge\raisebox{0.5mm}{{\small ++}} を用いた．
 
 \newpage
 \section{結果・考察}
@@ -315,8 +372,8 @@ $Z$ は
 
 Linux カーネルは 1991 年に Helsinki 大学の計算機科学専攻の学生であった Linus Torvalds が趣味のプロジェクトとしてそれを創始した．
 現在では世界中に数千人の開発者がいる．
-現在では Torvalds が書いたコードは Linux カーネルのソースコードのうちのごく一部でしかなく，ほかの開発者の貢献なしに我々がその利便性を経験することができないのは確かだが，もっと重要ななの Torvalds がそれを創始したということだ．
+現在では Torvalds が書いたコードは Linux カーネルのソースコードのうちのごく一部でしかなく，ほかの開発者の貢献なしに我々がその利便性を経験することができないのは確かだが，もっと重要なのは Torvalds がそれを創始したということだ．
 彼に最大限の敬意と感謝を表する．
 
-最後に大学院修士課程卒業まで支えてきてくれた両親にこの場を借りて感謝の意を表します．
+最後に大学院卒業まで支えてきてくれた両親に，この場を借りて感謝の意を表します．
 \end{document}

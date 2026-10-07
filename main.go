@@ -23,18 +23,14 @@ const (
 	T3    = 3.01
 )
 
-func main() {
-	var Nconf int
-	var temp, part string
+var Nconf int
+var temp, part string
 
-	flag.IntVar(&Nconf, "n", 0, "number of configurations")
-	flag.StringVar(&temp, "t", "", "temperature")
-	flag.StringVar(&part, "p", "", "connected or disconnected")
-	flag.Parse()
-	
+func main() {
+	InitializeFlags()
 	correlator := make([][]complex128, Nconf)
 	for iconf := 0; iconf < Nconf; iconf++ {
-		data, err := Parse(fmt.Sprintf("/home/hironao/lattice-qft/data/%s/%s/%d.dat", temp, part, iconf))
+		data, err := Parse(fmt.Sprintf("/home/hironao/lattice-qft/data/T%s/%s/%d.dat", temp, part, iconf))
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "%v\n", err)
 			os.Exit(1)
@@ -51,7 +47,14 @@ func main() {
 	average  := ensemble.Average()
 	error    := ensemble.Error()
 
-	Display(RescaleLength(pos, T0), RescaleLength(pos, T1), RescaleLength(pos, T2), RescaleLength(pos, T3))
+	Display(RescaleLength(pos, T0), RescaleCorrelator(average, T0), RescaleCorrelator(error, T0))
+}
+
+func InitializeFlags() {
+	flag.IntVar(&Nconf, "n", 0, "number of configurations")
+	flag.StringVar(&temp, "t", "", "temperature")
+	flag.StringVar(&part, "p", "", "connected or disconnected")
+	flag.Parse()
 }
 
 func Parse(filename string) ([]complex128, error) {

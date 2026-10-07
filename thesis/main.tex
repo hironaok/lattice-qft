@@ -67,32 +67,43 @@
 まず，有限温度の場の理論，特に，有限温度における量子色力学（qunatum chromodynamics；QCD）を概観する．
 この節は我々が扱おうとしている物理，つまり，クォーク・グルーオン・プラズマ（quark-gluon plasma；QGP）の物理がいかなるものであるかを明らかにするために当てられる．
 
-\subsection{経路積分形式による統計力学}
-ある系に対してハミルトニアン $H$ が与えられると分解関数 $Z$ を定義することができ，（原理的には）様々な物理量を計算することができる．
+\subsection{虚時間形式と経路積分}
+ある系に対してハミルトニアン $H$ が与えられると分配関数 $Z$ を定義することができ，（原理的には）様々な物理量を計算することができる．
 $Z$ は
 \begin{align}
   Z = \Tr e^{-\beta H} \label{def:pf}
 \end{align}
 と定義される．
-経路積分の方法を用いて $Z$ を表示することもできる．
-この場合にはハミルトニアンではなくラグランジアンが主役になる．
-そのためには分配関数の定義 \eqref{def:pf} を次のように書き直してみる．
+分配関数は経路積分による表示も持つ．
+これは経路積分を用いて統計力学をも定式化可能であるということを意味する．
+以下ではそのことを概観する．
+
+分配関数の定義 \eqref{def:pf} における $\Tr$ が作用する演算子 $e^{-\beta H}$ を虚時間形式における時間発展演算子であるとみなす．
+つまり，虚時間形式において $\beta$ だけの時間発展を施す演算子だと考えるのである．
+いま，十分大きい自然数 $N$ を用意し，演算子 $e^{-\beta H}$ を微小な時間発展 $\beta / N$ の積み重ねであると考える．
 \begin{align}
-  Z = \Tr e^{-\beta H} = \int \dd\varphi \,  \bra{\varphi} e^{-\beta H} \ket{\varphi}.
+  e^{-\beta H} = \qty{e^{-(\beta / N)H}}^N
 \end{align}
-これを変形して $Z$ の経路積分形式を導くわけであるが，そのためにハミルトニアンが場 $\varphi$ と正準運動量 $\pi = \partial_t \varphi$ の関数であることを明示的に書いておく．
-\begin{align}
-  Z = \int \dd\varphi \, \bra{\varphi} e^{-\beta H(\varphi, \pi)} \ket{\varphi}.
-\end{align}
-いま，被積分関数 $\bra{\varphi} e^{-\beta H} \ket{\varphi}$ に注目すると
-\begin{align}
-  \bra{\varphi} e^{-\beta H(\varphi, \pi)} \ket{\varphi} = \bra{\varphi} \qty{e^{-\varDelta t H(\varphi, \pi)}}^N \ket{\varphi}, \quad \varDelta t \equiv \frac{\beta}{N}
-\end{align}
-と書けて，微小な時間発展の演算子 $e^{-\varDelta t H(\varphi, \pi)}$ を多数掛け合わせているとみなせる．
-いま，完全性の関係式 ${\displaystyle \int \dd\varphi_k \, \ket{\varphi_k, t_k}\bra{\varphi_k, t_k} = 1}$ をはさみこんで次を得る．
-\begin{align}
-  \int \dd \varphi_N \cdots \int \dd \varphi_1 \, \bra{\varphi} e^{-\varDelta t H(\varphi, \pi)}\ket{\varphi_k, t_k}
-\end{align}
+
+%% 経路積分の方法を用いて $Z$ を表示することもできる．
+%% この場合にはハミルトニアンではなくラグランジアンが主役になる．
+%% そのためには分配関数の定義 \eqref{def:pf} を次のように書き直してみる．
+%% \begin{align}
+%%   Z = \Tr e^{-\beta H} = \int \dd\varphi \,  \bra{\varphi} e^{-\beta H} \ket{\varphi}.
+%% \end{align}
+%% これを変形して $Z$ の経路積分形式を導くわけであるが，そのためにハミルトニアンが場 $\varphi$ と正準運動量 $\pi = \partial_t \varphi$ の関数であることを明示的に書いておく．
+%% \begin{align}
+%%   Z = \int \dd\varphi \, \bra{\varphi} e^{-\beta H(\varphi, \pi)} \ket{\varphi}.
+%% \end{align}
+%% いま，被積分関数 $\bra{\varphi} e^{-\beta H} \ket{\varphi}$ に注目すると
+%% \begin{align}
+%%   \bra{\varphi} e^{-\beta H(\varphi, \pi)} \ket{\varphi} = \bra{\varphi} \qty{e^{-\varDelta t H(\varphi, \pi)}}^N \ket{\varphi}, \quad \varDelta t \equiv \frac{\beta}{N}
+%% \end{align}
+%% と書けて，微小な時間発展の演算子 $e^{-\varDelta t H(\varphi, \pi)}$ を多数掛け合わせているとみなせる．
+%% いま，完全性の関係式 ${\displaystyle \int \dd\varphi_k \, \ket{\varphi_k, t_k}\bra{\varphi_k, t_k} = 1}$ をはさみこんで次を得る．
+%% \begin{align}
+%%   \int \dd \varphi_N \cdots \int \dd \varphi_1 \, \bra{\varphi} e^{-\varDelta t H(\varphi, \pi)}\ket{\varphi_k, t_k}
+%% \end{align}
 
 
 \subsection{量子色力学の系の統計力学}
@@ -129,7 +140,8 @@ $Z$ は
 まず，この節では計算する物理量がいかなるものであるかを説明する．
 
 \subsection{クォーク数密度演算子の空間相関}
-いったん，カラー・フレーバーの自由度を考えないことにすると，我々が計算するのはクォーク数密度演算子の空間相関である．
+いったん，カラー・フレーバーの自由度を考えないことにする．
+我々が計算するのはクォーク数密度演算子の空間相関である．
 つまり
 \begin{align}
   \ev{\rho(t, \vec{r})\rho(t, \vec{0})}; \quad \rho(t, \vec{r}) = \overline{q(t, \vec{r})} \gamma_0 q(t, \vec{r})
@@ -155,7 +167,7 @@ $Z$ は
 \end{align}
 である．
 
-格子 QCD のフレームワークでは Feynman 伝播関数を計算できるようになっていることが多い．
+格子 QCD の数値計算フレームワークでは Feynman 伝播関数を計算できるようになっていることが多い．
 いま，作用$S_\mathrm{q}$ がは $q, \overline{q}$ の双一次形式であるので，$\ev{\,\cdot\,}_\mathrm{quark}$ は Wick 縮約により Feynman 伝播関数の積に分解することができる．
 そのためにまずスピノルの自由度を明示的に書くことにすると
 \begin{align}
@@ -336,17 +348,37 @@ RG 改良グルーオン作用は
 である．
 格子のインデックス $n = 0, 1, \cdots, N_x$（$y, z, t$ 方向についても同様）は温度 $T$ ごとに物理的な値大きさへの変換が必要である．
 ここでは擬臨界温度の逆数を単位としたスケールへの変換をする．
-物理的な距離スケール $x$ と格子のインデックス $n$ は格子間隔 $a$ で $x = na$ の関係で結ばれている．
+物理的な距離スケール $x$ と格子のインデックス $n_x$ は格子間隔 $a$ で $x = n_xa$ の関係で結ばれている．
 一方，格子間隔 $a$ と温度 $T$ は $T = \qty(aN_t)^{-1}$ の関係で結ばれている．
-よって，$a = \qty(N_t T)^{-1}$ の関係を用いて，格子のインデックス $n$ を物理的な距離スケール $x$ に変換することができる．
+よって，$a = \qty(N_t T)^{-1}$ の関係を用いて，格子のインデックス $n_x$ を物理的な距離スケール $x$ に変換することができる．
 \begin{align}
-  x = na = \frac{n}{N_t T}
+  x = n_xa = \frac{n_x}{N_t T}
 \end{align}
 ただし，我々が温度のデータとして持ち合わせているのは $T/T_\mathrm{pc}$ にスケーリングされているものなので，次のようにスケーリングしておく．
 \begin{align}
-  x = \frac{n}{N_t \cdot (T / T_\mathrm{pc})} \quad \Big[1/T_\mathrm{pc}\Big].
+  x = \frac{n_x}{N_t \cdot (T / T_\mathrm{pc})} \quad \Big[1/T_\mathrm{pc}\Big].
 \end{align}
-格子のインデックスと物理的なスケールの温度ごとの対応表を付録 \ref{appendix:} に記す．
+格子のインデックスと物理的なスケールの温度ごとの対応表を表 \ref{table:index} に記す．
+\begin{table}[b]
+  \caption{格子インデックス $n_x$ と物理的距離 $x$}
+  \label{table:index}  
+  \centering
+  \begin{tabular}{cccccccccccc}
+    \hline\hline
+    $n_x$ & $x$ & $n_x$ & $x$ & $n_x$ & $x$ & $n_x$ & $x$ & $n_x$ & $x$ & $n_x$ & $x$\\
+    \hline
+    0 & 0.000 000 &  8  & 2.631 579 &  16 & 5.263 158 &  24 & 7.894 737  & 32 & 5.263 158  & 40 & 2.631 579\\
+    1 & 0.328 947 &  9  & 2.960 526 &  17 & 5.592 105 &  25 & 7.565 789  & 33 & 4.934 211  & 41 & 2.302 632\\
+    2 & 0.657 895 &  10 & 3.289 474 &  18 & 5.921 053 &  26 & 7.236 842  & 34 & 4.605 263  & 42 & 1.973 684\\
+    3 & 0.986 842 &  11 & 3.618 421 &  19 & 6.250 000 &  27 & 6.907 895  & 35 & 4.276 316  & 43 & 1.644 737\\
+    4 & 1.315 789 &  12 & 3.947 368 &  20 & 6.578 947 &  28 & 6.578 947  & 36 & 3.947 368  & 44 & 1.315 789\\
+    5 & 1.644 737 &  13 & 4.276 316 &  21 & 6.907 895 &  29 & 6.250 000  & 37 & 3.618 421  & 45 & 0.986 842\\
+    6 & 1.973 684 &  14 & 4.605 263 &  22 & 7.236 842 &  30 & 5.921 053  & 38 & 3.289 474  & 46 & 0.657 895\\
+    7 & 2.302 632 &  15 & 4.934 211 &  23 & 7.565 789 &  31 & 5.592 105  & 39 & 2.960 526  & 47 & 0.328 947\\
+    \hline\hline
+  \end{tabular}
+\end{table}
+
 
 シミュレーションにおけるパラメーターのチューニングを自前で行うことはせず，文献 \ref{bib:} を参考にした．
 対応するパラメーターを表 \ref{table:parameters} に記す．
@@ -376,4 +408,5 @@ Linux カーネルは 1991 年に Helsinki 大学の計算機科学専攻の学�
 彼に最大限の敬意と感謝を表する．
 
 最後に大学院卒業まで支えてきてくれた両親に，この場を借りて感謝の意を表します．
+
 \end{document}

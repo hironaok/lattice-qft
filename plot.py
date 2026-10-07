@@ -5,7 +5,6 @@ import matplotlib.pyplot as plot
 import numpy as np
 
 
-
 EXAMPLE_FILE = "demo.dat"
 
 MIN_DISTANCE = 0
@@ -24,6 +23,7 @@ def main():
     axzoom = ax.inset_axes([0.3, 0.3, 0.6, 0.5])
 
     colors = ["red", "blue"]
+    labels = ["connected", "disconnected"]
     for i, fn in enumerate(args.filenames):
         data = np.loadtxt(fn, dtype = float)
         
@@ -31,9 +31,6 @@ def main():
         Y = data[args.start:args.end, 3]
         E = data[args.start:args.end, 5]
 
-        L = pathlib.Path(fn).stem
-
-        
         ax.errorbar(
             X,
             Y,
@@ -42,7 +39,8 @@ def main():
             capsize    = 5,
             fmt        = 'o',
             markersize = 3,
-            label = L,
+            
+            label = labels[i],
             color = colors[i],
             alpha = 0.5
         )
@@ -55,7 +53,8 @@ def main():
             capsize    = 5,
             fmt        = 'o',
             markersize = 3,
-            label = L,
+            
+            label = labels[i],
             color = colors[i],
             alpha = 0.5
         )
@@ -63,7 +62,7 @@ def main():
 
     axzoom.set_xlim(0.9, 1.75)
     
-    axzoom.set_ylim(-1.15, 1.55)
+    axzoom.set_ylim(-1.05, 0.55)
 
     axzoom.grid()
 
@@ -74,9 +73,9 @@ def main():
     ax.legend()
     
     ax.ticklabel_format(
-        axis="y",
-        style="sci",
-        scilimits=(0, 0)
+        axis      = "y",
+        style     = "sci",
+        scilimits = (0, 0)
     )
     
     ax.set_title(
@@ -90,7 +89,7 @@ def main():
     )
     
     ax.set_ylabel(
-        r"Connected/disconnected part of $\left<\rho(x)\rho(0)\right>$",
+        r"Connected/disconnected part of $\left<\rho_u(x)\rho_u(0)\right>$",
         fontsize = 15
     )
     fig.savefig('plot.png', dpi = 200)

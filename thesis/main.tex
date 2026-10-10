@@ -68,45 +68,118 @@
 この節は我々が扱おうとしている物理，つまり，クォーク・グルーオン・プラズマ（quark-gluon plasma；QGP）の物理がいかなるものであるかを明らかにするために当てられる．
 
 \subsection{虚時間形式と経路積分}
-ある系に対してハミルトニアン $H$ が与えられると分配関数 $Z$ を定義することができ，（原理的には）様々な物理量を計算することができる．
+簡単のためスカラー場 $\varphi(t, \vec{r})$ とその正準運動量 $\pi(t, \vec{r}) = \partial_t \varphi(t, \vec{r})$ で記述される系を考える．
+いま，ある系に対してハミルトニアン $H(\varphi, \pi)$ が与えられると分配関数 $Z$ を定義することができ，（原理的には）様々な物理量を計算することができる．
 $Z$ は
 \begin{align}
   Z = \Tr e^{-\beta H} \label{def:pf}
 \end{align}
 と定義される．
+
 分配関数は経路積分による表示も持つ．
 これは経路積分を用いて統計力学をも定式化可能であるということを意味する．
 以下ではそのことを概観する．
 
-分配関数の定義 \eqref{def:pf} における $\Tr$ が作用する演算子 $e^{-\beta H}$ を虚時間形式における時間発展演算子であるとみなす．
-つまり，虚時間形式において $\beta$ だけの時間発展を施す演算子だと考えるのである．
-いま，十分大きい自然数 $N$ を用意し，演算子 $e^{-\beta H}$ を微小な時間発展 $\beta / N$ の積み重ねであると考える．
+まず，場の理論における経路積分を復習する．
+いま，相互作用項 $\mathscr{L}_\mathrm{int}(\varphi)$ を持つスカラー場の理論を考える．
+ラグランジアン密度 $\mathscr{L}(\varphi)$ が
 \begin{align}
-  e^{-\beta H} = \qty{e^{-(\beta / N)H}}^N
+  \mathscr{L}(\varphi) = \frac{1}{2} \partial_\mu \varphi \partial_\mu \varphi - \frac{m^2}{2} \varphi^2 + \mathscr{L}_\mathrm{int}(\varphi)
 \end{align}
+で与えられるとする．
+この系の時間発展の生成子 $H$ は
+\begin{align}
+  H = \int \dd^3r \, \qty{\frac{1}{2}\pi^2 + \frac{1}{2}\qty(\nabla \varphi)^2 + \frac{m^2}{2}\varphi^2 - \mathscr{L}_\mathrm{int}(\varphi)}
+\end{align}
+で与えられる．
+Schrödinger 表示の場の演算子 $\varphi(\vec{r}),\, \pi(\vec{r})$ と Heisenberg 表示の場の演算子 $\varphi(x),\, \pi(x)$ は次の関係で結ばれる．
+\begin{align}
+  \varphi(x) = e^{it H} \varphi(\vec{r})e^{-it H}, \quad \pi(x) = e^{it H} \pi(\vec{r}) e^{-it H}.
+\end{align}
+ただし，時刻 0 において両演算子は一致していたとする．
+また，Schrödinger 表示の場の演算子と Heisenberg 表示の場の演算子の固有状態の間の関係は
+\begin{align}
+  \ket{\varphi; t} = e^{it H} \ket{\varphi}; \quad \varphi(\vec{r}) \ket{\varphi} = \varphi(\vec{r}) \ket{\varphi}, \quad
+  \varphi(t, \vec{r}) \ket{\varphi; t} = \varphi(\vec{r}) \ket{\varphi; t}
+\end{align}
+で与えられる．
 
-%% 経路積分の方法を用いて $Z$ を表示することもできる．
-%% この場合にはハミルトニアンではなくラグランジアンが主役になる．
-%% そのためには分配関数の定義 \eqref{def:pf} を次のように書き直してみる．
-%% \begin{align}
-%%   Z = \Tr e^{-\beta H} = \int \dd\varphi \,  \bra{\varphi} e^{-\beta H} \ket{\varphi}.
-%% \end{align}
-%% これを変形して $Z$ の経路積分形式を導くわけであるが，そのためにハミルトニアンが場 $\varphi$ と正準運動量 $\pi = \partial_t \varphi$ の関数であることを明示的に書いておく．
-%% \begin{align}
-%%   Z = \int \dd\varphi \, \bra{\varphi} e^{-\beta H(\varphi, \pi)} \ket{\varphi}.
-%% \end{align}
-%% いま，被積分関数 $\bra{\varphi} e^{-\beta H} \ket{\varphi}$ に注目すると
-%% \begin{align}
-%%   \bra{\varphi} e^{-\beta H(\varphi, \pi)} \ket{\varphi} = \bra{\varphi} \qty{e^{-\varDelta t H(\varphi, \pi)}}^N \ket{\varphi}, \quad \varDelta t \equiv \frac{\beta}{N}
-%% \end{align}
-%% と書けて，微小な時間発展の演算子 $e^{-\varDelta t H(\varphi, \pi)}$ を多数掛け合わせているとみなせる．
-%% いま，完全性の関係式 ${\displaystyle \int \dd\varphi_k \, \ket{\varphi_k, t_k}\bra{\varphi_k, t_k} = 1}$ をはさみこんで次を得る．
-%% \begin{align}
-%%   \int \dd \varphi_N \cdots \int \dd \varphi_1 \, \bra{\varphi} e^{-\varDelta t H(\varphi, \pi)}\ket{\varphi_k, t_k}
-%% \end{align}
+場の理論においてはある始状態 $\ket{\varphi_\mathrm{I}; t_\mathrm{I}}$ からある終状態 $\ket{\varphi_\mathrm{F}; t_\mathrm{F}}$ への遷移振幅 $\bra{\varphi_\mathrm{F}; t_\mathrm{F}}\ket{\varphi_\mathrm{I}; t_\mathrm{I}}$ を計算することが主に問題になる．
+いま，時刻 $t_\mathrm{I}$ から $t_\mathrm{F}$ を $N$ 等分した時系列を考える．
+\begin{align}
+  t_\mathrm{I} = t_0 < t_1 < \cdots < t_{N-1} < t_N = t_\mathrm{F}, \quad \varDelta t = t_{i+1} - t_i = \frac{t_\mathrm{F} - t_\mathrm{I}}{N}.
+\end{align}
+各時刻 $t_i$ における固有ベクトルの完全系
+\begin{align}
+  \int \dd \varphi_{N-1} \cdots \int \dd \varphi_1\, \ket{\qty{\varphi_i}; t_i} \bra{\qty{\varphi_i}; t_i} = 1
+\end{align}
+を遷移振幅の表式の間にはさみこんで
+\begin{align}
+  \bra{\varphi_\mathrm{F}; t_\mathrm{F}}\ket{\varphi_\mathrm{I}; t_\mathrm{I}} = \int \dd \varphi_{N-1} \cdots \int \dd \varphi_1 \, \bra{\varphi_N; t_N}\ket{\varphi_{N-1}; t_{N-1}}\bra{\varphi_{N-1}; t_{N-1}} \cdots \ket{\varphi_1; t_1}\bra{\varphi_1; t_1}\ket{\varphi_0; t_0}
+\end{align}
+を得る．
+いま，$\bra{\varphi_{i+1}; t_{i+1}}\ket{\varphi_i; t_i}$ を計算する必要がある．
+いま，Schrödinger 表示に移ると
+\begin{align}
+  \bra{\varphi_{i+1}; t_{i+1}}\ket{\varphi_i; t_i} = \bra{\varphi_{i+1}}e^{-i \varDelta t H}\ket{\varphi_i} &\sim \bra{\varphi_{i+1}} \qty(1 - i\varDelta t H) \ket{\varphi_{i}} \notag \\
+  &= \bra{\varphi_{i+1}}\ket{\varphi_i} - i\varDelta t \bra{\varphi_{i+1}}H \ket{\varphi_i} \notag \\
+  &= \int \dd \pi_i \, \bra{\varphi_{i+1}}\ket{\pi_i}\bra{\pi_i}\ket{\varphi_i} - i\varDelta t \int \dd \pi_i \, \bra{\varphi_{i+1}}\ket{\pi_i}\bra{\pi_i} H \ket{\varphi_i} \notag \\
+  %% もう少し詳しく式変形を書いてもよいな
+  &= \int \dd \pi_i \, \exp i\varDelta t \qty{\int \dd^3 r\, \frac{\varphi_{i+1}-\varphi_i}{\varDelta t} \pi_i - H(\pi_i, \varphi_i)}
+\end{align}
+と書けるから
+\begin{align}
+  \bra{\varphi_\mathrm{F}; t_\mathrm{F}}\ket{\varphi_\mathrm{I}; t_\mathrm{I}} = \int \dd \varphi_{N-1} \cdots \int \dd \varphi_1 \int \dd \pi_{N-1} \cdots \int \dd \pi_1 \, \exp i\varDelta t \sum_{i = 0}^{N-1} \qty{\int \dd^3 r\, \frac{\varphi_{i+1}-\varphi_i}{\varDelta t} \pi_i - H(\pi_i, \varphi_i)}
+\end{align}
+を得る．
+いま，分割の幅を無限に小さくする極限を考えて，その場合の測度を $\mathscr{D}\varphi, \mathscr{D}\pi$ と書くことにする．
+すると指数関数の肩の部分を平方完成して積分を実行すると
+\begin{align}
+  \bra{\varphi_\mathrm{F}; t_\mathrm{F}}\ket{\varphi_\mathrm{I}; t_\mathrm{I}}
+  &= \int \mathscr{D}\varphi \int \mathscr{D}\pi \, \exp i\int_{t_\mathrm{I}}^{t_\mathrm{F}} \dd t \int \dd^3 r\, \qty{\dot{\varphi}\pi - \frac{1}{2}\pi^2 - \frac{1}{2}\qty(\nabla \varphi)^2 - \frac{m^2}{2}\varphi^2 + \mathscr{L}_\mathrm{int}(\varphi)} \notag\\
+  &= \int \mathscr{D}\varphi \int \mathscr{D}\pi \, \exp i\int_{t_\mathrm{I}}^{t_\mathrm{F}} \dd t \int \dd^3 r\, \qty{-\frac{1}{2}\qty(\pi - \dot{\varphi})^2 + \mathscr{L}(\varphi)} \notag\\
+  &= \int \mathscr{D}\varphi \, \exp i\int_{t_\mathrm{I}}^{t_\mathrm{F}} \dd t \int \dd^3r \, \mathscr{L}(\varphi);\quad
+  \varphi(t_\mathrm{I}, \vec{r}) = \varphi_\mathrm{I}(\vec{r}), \quad \varphi(t_\mathrm{F}, \vec{r}) = \varphi_\mathrm{F}(\vec{r})
+\end{align}
+を得る．
+Schrödinger 表示で書くと
+\begin{align}
+  \bra{\varphi_\mathrm{F}} e^{-i(t_\mathrm{F} - t_\mathrm{I})H}\ket{\varphi_\mathrm{I}} = \int \mathscr{D}\varphi \, \exp i\int_{t_\mathrm{I}}^{t_\mathrm{F}} \dd t \int \dd^3r \, \mathscr{L}(\varphi); \quad
+  \varphi(t_\mathrm{I}, \vec{r}) = \varphi_\mathrm{I}(\vec{r}), \quad \varphi(t_\mathrm{F}, \vec{r}) = \varphi_\mathrm{F}(\vec{r})
+\end{align}
+である．
 
+ここでもとの議論に戻る．
+場の理論における遷移振幅の経路積分の表式を用いて分配関数を表すことができる．
+そのためにまず，虚時間形式に移る．
+虚時間形式では Wick 回転によって遷移振幅の経路積分表示は次のように表せる．
+\begin{align}
+  \bra{\varphi_\mathrm{F}}e^{-(t_\mathrm{F}- t_\mathrm{I})H_\mathrm{e}} \ket{\varphi_\mathrm{I}} = \int \mathscr{D}\varphi \, \exp \qty{-\int_{t_\mathrm{I}}^{t_\mathrm{F}} \dd t \int \dd^3r \, \mathscr{L}_\mathrm{e}(\varphi)}.
+\end{align}
+ただし，$H_\mathrm{e}, \, \mathscr{L}_\mathrm{e}(\varphi)$ はそれぞれ Wick 回転後の時間発展の生成子，ラグランジアン密度である．
+以降では，虚時間形式であることを前提として，この下付き文字を書かない．
+いま，場 $\varphi$ の固有ベクトルの完全系で分配関数を計算する．
+\begin{align}
+  Z = \Tr e^{-\beta H} = \int \dd \varphi \, \bra{\varphi} e^{-\beta H}\ket{\varphi}.
+\end{align}
+この計算において遷移振幅の経路積分表式において $\varphi_\mathrm{F} = \varphi, \, \varphi_\mathrm{I} = \varphi$ としたものが使えるのが明らかである．
+よって
+\begin{align}
+  Z = \int \mathscr{D} \varphi \, \exp{-\int_0^\beta \dd t \int \dd^3 r \, \mathscr{L}(\varphi)} ; \quad \varphi(0, \vec{r}) = \varphi(\beta, \vec{r})
+\end{align}
+もとの境界条件は時間方向の周期境界条件となる．
+
+ここまでに導いたことを総括すると統計力学は時間方向に周期的境界条件を課してコンパクト化した時空上の場の理論として定式化可能であると結論付けることができる．
 
 \subsection{量子色力学の系の統計力学}
+ついに QGP の物理がいかなるものであるかを概観すべく QCD の系の統計力学を考える．
+QCD の統計力学を考えるにあたっても前小節ですでにみた分配関数の経路積分表示による定式化が基本となる．
+スカラー場の理論の場合と全く平行に議論して次の分配関数を得ることができるであろう．
+\begin{gather}
+  Z_\mathrm{QCD} = \int \mathscr{D} \psi \int \mathscr{D} \overline{\psi} \int \mathscr{D} A_\mu \, \exp{-\int_0^\beta \dd t \int \dd^3 r \, \mathscr{L}_\mathrm{QCD}(\psi, \overline{\psi}, A_\mu)}; \notag\\
+  \mathscr{L}_\mathrm{QCD}(\psi, \overline{\psi}, A_\mu) = \overline{\psi} \qty(\gamma^\mu D_\mu - m) \psi -\frac{1}{4}F_{\mu\nu} F^{\mu\nu}
+\end{gather}
+
 
 \subsection{硬熱ループ近似による計算}
 
